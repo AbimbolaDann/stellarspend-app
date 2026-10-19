@@ -108,11 +108,21 @@ class AccountStreamManager {
     return { status: this.status, account: this.activeAccount };
   }
 
+  /**
+   * Registers a listener for streamed account events.
+   * @param listener - Callback invoked for each account stream event.
+   * @returns A function that removes the listener.
+   */
   subscribe(listener: AccountStreamListener): () => void {
     this.listeners.add(listener);
     return () => this.listeners.delete(listener);
   }
 
+  /**
+   * Registers a listener for stream lifecycle status changes.
+   * @param listener - Callback invoked whenever the stream status changes.
+   * @returns A function that removes the listener.
+   */
   subscribeStatus(listener: AccountStreamStatusListener): () => void {
     this.statusListeners.add(listener);
     return () => this.statusListeners.delete(listener);

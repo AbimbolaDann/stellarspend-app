@@ -8,8 +8,10 @@ import {
   TransactionBuilder,
 } from "@stellar/stellar-sdk";
 
+/** Asset codes supported for payments. */
 export type PaymentAsset = "XLM" | "USDC" | "EURC";
 
+/** Issuer public keys for the non-native payment assets. */
 export interface PaymentAssetIssuers {
   USDC?: string;
   EURC?: string;
