@@ -15,6 +15,7 @@ export interface PaymentAssetIssuers {
   EURC?: string;
 }
 
+/** Options for building a Stellar payment transaction. */
 export interface BuildPaymentTransactionOptions {
   source: string;
   destination: string;
@@ -33,6 +34,12 @@ const DEFAULT_ASSET_ISSUERS: PaymentAssetIssuers = {
   EURC: process.env.NEXT_PUBLIC_STELLAR_EURC_ISSUER,
 };
 
+/**
+ * Validates that an address is a Stellar Ed25519 public key.
+ * @param address - The address to validate.
+ * @param label - Human-readable field name used in the error message.
+ * @throws {Error} If the address is not a valid Stellar public key.
+ */
 function validatePublicKey(address: string, label: string) {
   if (!StrKey.isValidEd25519PublicKey(address)) {
     throw new Error(`${label} must be a valid Stellar public key.`);

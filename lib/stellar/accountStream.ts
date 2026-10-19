@@ -292,6 +292,10 @@ class AccountStreamManager {
 
 let manager: AccountStreamManager | null = null;
 
+/**
+ * Returns the shared account stream manager, creating it on first use.
+ * @returns The singleton `AccountStreamManager` instance.
+ */
 function getManager(): AccountStreamManager {
   if (!manager) manager = new AccountStreamManager();
   return manager;

@@ -105,6 +105,11 @@ export function budgetBaseSnapshot(budget: Budget): Record<string, unknown> {
   };
 }
 
+/**
+ * Converts a JavaScript value to its Soroban XDR representation.
+ * @param value - The value to convert; 56-character `G...` strings become addresses and numbers become u64.
+ * @returns The value encoded as a Soroban `ScVal`.
+ */
 function toScVal(value: unknown): xdr.ScVal {
   if (typeof value === 'string' && value.startsWith('G') && value.length === 56) {
     return new Address(value).toScVal();

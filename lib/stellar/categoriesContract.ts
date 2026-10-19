@@ -32,6 +32,7 @@ export const STANDARD_CATEGORIES = [
   'Other',
 ] as const;
 
+/** A category label from the standard category picker list. */
 export type StandardCategory = (typeof STANDARD_CATEGORIES)[number];
 
 /** Deterministic badge color per category, keyed by lowercase label so custom
@@ -62,6 +63,10 @@ export function getCategoryColor(category: string) {
 // localStorage fallback (used when the contract isn't deployed yet)
 // ---------------------------------------------------------------------------
 
+/**
+ * Reads locally stored transaction categories for the offline/mock fallback.
+ * @returns A map of transaction ID to category label, or an empty object when none are stored.
+ */
 function getLocalCategories(): Record<string, string> {
   if (typeof window === 'undefined') return {};
   const stored = localStorage.getItem(LOCAL_CATEGORIES_KEY);
