@@ -21,6 +21,10 @@ const ESCROW_CONTRACT_ID = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ID ?? '';
 const LOCAL_SPLITS_KEY = 'stellarspend_local_splits';
 const POLL_INTERVAL_MS = 4000;
 
+/**
+ * Reads the split bills cached in localStorage for the offline/mock fallback.
+ * @returns The cached split bills, or an empty array when none are stored.
+ */
 function getMockSplits(): SplitBill[] {
   if (typeof window === 'undefined') return [];
   const stored = localStorage.getItem(LOCAL_SPLITS_KEY);
@@ -33,6 +37,10 @@ function getMockSplits(): SplitBill[] {
   }
 }
 
+/**
+ * Persists split bills to localStorage and notifies split listeners.
+ * @param splits - The split bills to store.
+ */
 function setMockSplits(splits: SplitBill[]) {
   if (typeof window === 'undefined') return;
   localStorage.setItem(LOCAL_SPLITS_KEY, JSON.stringify(splits));

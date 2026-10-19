@@ -18,8 +18,10 @@ import {
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+/** How often a recurring payment schedule executes. */
 export type Frequency = 'daily' | 'weekly' | 'monthly' | 'yearly';
 
+/** Lifecycle state of a recurring payment schedule. */
 export type ScheduleStatus = 'active' | 'paused' | 'cancelled' | 'completed';
 
 export type ExecutionResult = 'success' | 'skipped' | 'failed';
