@@ -42,6 +42,7 @@ export interface RecurringPayment {
   createdAt: number;
 }
 
+/** A record of a single recurring payment execution attempt. */
 export interface ExecutionRecord {
   scheduleId: string;
   result: ExecutionResult;
@@ -61,6 +62,10 @@ const LOCAL_EXECUTIONS_KEY = 'stellarspend_recurring_executions';
 
 // ── Mock / fallback storage ───────────────────────────────────────────────────
 
+/**
+ * Reads recurring payment schedules cached in localStorage for the offline/mock fallback.
+ * @returns The cached schedules, or an empty array when none are stored.
+ */
 function getMockSchedules(): RecurringPayment[] {
   if (typeof window === 'undefined') return [];
   const stored = localStorage.getItem(LOCAL_SCHEDULES_KEY);
@@ -467,6 +472,12 @@ export async function fetchExecutionHistory(
 
 // ── Utility ───────────────────────────────────────────────────────────────────
 
+/**
+ * Computes the next due date by adding the interval for `frequency` to `currentDue`.
+ * @param currentDue - The current due date (YYYY-MM-DD).
+ * @param frequency - How often the schedule repeats.
+ * @returns The next due date (YYYY-MM-DD).
+ */
 function computeNextDueDate(currentDue: string, frequency: Frequency): string {
   switch (frequency) {
     case 'daily':

@@ -81,6 +81,11 @@ export function updateSplitLocal(
   return splits[index];
 }
 
+/**
+ * Builds the per-participant shares for a new split bill.
+ * @param input - The split description, participants, amounts, and split method.
+ * @returns The shares to collect, each initially pending.
+ */
 function buildShares(input: CreateSplitInput): SplitShare[] {
   if (input.method === 'even') {
     const evenAmount = Math.round((input.totalAmount / input.participants.length) * 100) / 100;
@@ -97,6 +102,11 @@ function buildShares(input: CreateSplitInput): SplitShare[] {
   }));
 }
 
+/**
+ * Checks whether every share of a split bill has been paid.
+ * @param split - The split bill to check.
+ * @returns True when all shares are paid, otherwise false.
+ */
 function isFullyCollected(split: SplitBill): boolean {
   return split.shares.every((s) => s.status === 'paid');
 }
