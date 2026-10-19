@@ -74,6 +74,11 @@ function getLocalCategories(): Record<string, string> {
   }
 }
 
+/**
+ * Stores a transaction's category in localStorage for the offline/mock fallback.
+ * @param transactionId - The transaction to tag.
+ * @param category - The category label to assign.
+ */
 function setLocalCategory(transactionId: string, category: string) {
   if (typeof window === 'undefined') return;
   const all = getLocalCategories();

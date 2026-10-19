@@ -39,6 +39,11 @@ function validatePublicKey(address: string, label: string) {
   }
 }
 
+/**
+ * Validates that a payment amount is positive and has at most 7 decimal places.
+ * @param amount - The amount to validate.
+ * @throws {Error} If the amount is non-positive or has more than 7 decimal places.
+ */
 function validateAmount(amount: string) {
   if (!/^(?:0|[1-9]\d*)(?:\.\d{1,7})?$/.test(amount) || Number(amount) <= 0) {
     throw new Error("Amount must be greater than zero with no more than 7 decimal places.");
