@@ -24,8 +24,10 @@ export type Frequency = 'daily' | 'weekly' | 'monthly' | 'yearly';
 /** Lifecycle state of a recurring payment schedule. */
 export type ScheduleStatus = 'active' | 'paused' | 'cancelled' | 'completed';
 
+/** Outcome of a single recurring payment execution attempt. */
 export type ExecutionResult = 'success' | 'skipped' | 'failed';
 
+/** A recurring payment schedule owned by a Stellar account. */
 export interface RecurringPayment {
   id: string;
   owner: string;
@@ -93,12 +95,22 @@ function getMockExecutions(): ExecutionRecord[] {
   return [];
 }
 
+/**
+ * Persists execution records to localStorage for the offline/mock fallback.
+ * @param executions - The execution records to store.
+ */
 function setMockExecutions(executions: ExecutionRecord[]) {
   if (typeof window !== 'undefined') {
     localStorage.setItem(LOCAL_EXECUTIONS_KEY, JSON.stringify(executions));
   }
 }
 
+/**
+ * Adds a number of days to a date string.
+ * @param dateStr - The starting date (YYYY-MM-DD).
+ * @param days - The number of days to add.
+ * @returns The resulting date (YYYY-MM-DD).
+ */
 function addDays(dateStr: string, days: number): string {
   const d = new Date(dateStr);
   d.setDate(d.getDate() + days);
