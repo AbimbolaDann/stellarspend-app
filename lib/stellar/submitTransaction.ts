@@ -125,7 +125,14 @@ function hasTrustline(
       balance.asset_issuer === issuer,
   );
 }
-
+/**
+ * Converts Stellar transaction failures and other thrown values into
+ * user-friendly errors with actionable payment failure messages.
+ *
+ * @param error - Error or unknown value caught during payment processing.
+ * @returns An `Error` containing the original error or a user-friendly
+ * message describing the failure.
+ */
 function mapStellarError(error: unknown): Error {
   if (error instanceof Error) {
     if (error instanceof TransactionFailedError) {
