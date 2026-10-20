@@ -81,12 +81,24 @@ function getMockSchedules(): RecurringPayment[] {
   return [];
 }
 
+/**
+ * Persists recurring payment schedules to localStorage for offline/mock mode.
+ *
+ * @param schedules - The recurring payment schedules to store.
+ * @returns Nothing.
+ */
 function setMockSchedules(schedules: RecurringPayment[]) {
   if (typeof window !== 'undefined') {
     localStorage.setItem(LOCAL_SCHEDULES_KEY, JSON.stringify(schedules));
   }
 }
 
+/**
+ * Retrieves locally cached recurring payment execution records for offline/mock mode.
+ *
+ * @returns The stored execution records, or an empty array if running
+ *   outside the browser, no records are stored, or the stored JSON is invalid.
+ */
 function getMockExecutions(): ExecutionRecord[] {
   if (typeof window === 'undefined') return [];
   const stored = localStorage.getItem(LOCAL_EXECUTIONS_KEY);
