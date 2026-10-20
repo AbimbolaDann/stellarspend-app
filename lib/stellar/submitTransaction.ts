@@ -148,6 +148,18 @@ function mapStellarError(error: unknown): Error {
   return new Error("The payment could not be completed. Please try again.");
 }
 
+/**
+ * Validates the source and destination Stellar accounts, checks asset
+ * trustlines and available balances, and retrieves the network transaction fee.
+ *
+ * @param server - Horizon server used to load accounts and fetch the base fee.
+ * @param options - Payment details and optional asset issuer configuration.
+ * @param networkPassphrase - Passphrase identifying the Stellar network.
+ * @returns The loaded source account, the fee to use for the transaction,
+ * and the network passphrase.
+ * @throws Error if either public key is invalid, an account cannot be found,
+ * the destination lacks the required trustline, or the source balance is insufficient.
+ */
 async function validatePayment(
   server: Horizon.Server,
   options: SubmitPaymentOptions,
