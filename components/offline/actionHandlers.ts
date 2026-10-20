@@ -61,6 +61,19 @@ export interface ConflictDetectionResult {
 /** How the user decided to settle a conflict. */
 export type ConflictStrategy = "keep_mine" | "keep_theirs" | "choose_fields";
 
+/**
+ * The user's decision for settling a detected field conflict.
+ *
+ * Collected by the conflict-resolution dialog for a {@link ConflictPrompt}
+ * and handed to {@link resolveConflicts} / {@link applyConflictResolution}.
+ *
+ * @property strategy - Keep this device's values (`"keep_mine"`), the other
+ *   device's values (`"keep_theirs"`), or decide per field
+ *   (`"choose_fields"`).
+ * @property choices - Per-field overrides mapping each field to `"mine"` or
+ *   `"theirs"`; required when `strategy` is `"choose_fields"` and ignored
+ *   otherwise.
+ */
 export interface ConflictResolution {
   strategy: ConflictStrategy;
   /** Per-field choices, required when `strategy` is `"choose_fields"`. */
@@ -88,10 +101,28 @@ export function valuesEqual(a: unknown, b: unknown): boolean {
   return false;
 }
 
+/**
+ * Reads one field off a record without casting the whole record at every
+ * call site.
+ *
+ * @param record - The record to read from.
+ * @param field - Name of the property to fetch.
+ * @returns The field's value, or `undefined` when the record lacks it.
+ */
 function readField(record: VersionedRecord, field: string): unknown {
   return (record as unknown as Record<string, unknown>)[field];
 }
 
+/**
+ * Returns a copy of `record` with a single field replaced; the input is
+ * never mutated, so callers can keep the original snapshot around for the
+ * three-way comparison.
+ *
+ * @param record - The record to copy.
+ * @param field - Name of the property to set.
+ * @param value - The new value for `field`.
+ * @returns A new record with every original field plus the updated `field`.
+ */
 function writeField(
   record: VersionedRecord,
   field: string,
@@ -144,6 +175,13 @@ export function parseQueuedUpdate(data: unknown): QueuedUpdate | null {
   };
 }
 
+/**
+ * Lists the fields of a queued update that take part in conflict detection:
+ * its change set minus the metadata keys (`id`, `updatedAt`, `createdAt`).
+ *
+ * @param update - The normalised queued update.
+ * @returns The conflict-relevant field names.
+ */
 function updateFields(update: QueuedUpdate): string[] {
   return Object.keys(update.changes).filter((field) => !IGNORED_FIELDS.has(field));
 }
