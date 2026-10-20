@@ -104,6 +104,15 @@ function isCreditBalance(balance: Horizon.HorizonApi.BalanceLine) {
   return "asset_code" in balance && "asset_issuer" in balance;
 }
 
+/**
+ * Checks whether a Stellar account has a trustline for the specified
+ * credit asset and its issuer.
+ *
+ * @param account - Account whose balances are checked.
+ * @param assetCode - Code of the credit asset to look for.
+ * @param issuer - Stellar public key of the asset issuer.
+ * @returns `true` if the account has a matching trustline; otherwise, `false`.
+ */
 function hasTrustline(
   account: { balances: Horizon.HorizonApi.BalanceLine[] },
   assetCode: PaymentAsset,
