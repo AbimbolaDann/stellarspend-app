@@ -61,13 +61,25 @@ export interface SubmittedPayment extends PendingPayment {
   ledger: number;
 }
 
-function createHorizonServer(url = HORIZON_URL) {
-  return new Horizon.Server(url);
-}
-
+/**
+ * Creates a Stellar Horizon server client for the specified endpoint.
+ *
+ * @param url - The Horizon server URL to connect to. Defaults to the configured
+ *   Horizon URL when omitted.
+ * @returns A Horizon server instance for querying and submitting transactions.
+ */
+/**
+ * Converts a submitted or pending payment into the transaction record format
+ * used by the application, including its payment operation details.
+ *
+ * @param payment - The payment details to convert.
+ * @param status - The transaction status to record. Defaults to `"confirmed"`.
+ * @returns A transaction record containing payment metadata, status, and
+ *   operation details.
+ */
 export function toTransactionRecord(
   payment: SubmittedPayment | PendingPayment,
-  status: "pending" | "confirmed" = "confirmed",
+  status: "pending" | "confirmed" = "confirmed"
 ) {
   return {
     id: payment.hash,
