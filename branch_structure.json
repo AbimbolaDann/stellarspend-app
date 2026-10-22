@@ -1,0 +1,18 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "fix/issue-642-add-doc-to-lib-stellar-accountstream-ts",
+    "main",
+    "origin"
+  ],
+  "parent": {
+    "fix/issue-642-add-doc-to-lib-stellar-accountstream-ts": "main",
+    "main": null,
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "fix/issue-642-add-doc-to-lib-stellar-accountstream-ts",
+    "origin"
+  ]
+}
