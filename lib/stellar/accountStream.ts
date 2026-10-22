@@ -82,11 +82,20 @@ export type AccountStreamEvent =
   | AccountStreamOperationEvent
   | AccountStreamPaymentEvent;
 
+/**
+ * Snapshot of the account stream's lifecycle state.
+ * @property status - Current lifecycle status of the stream.
+ * @property account - Public key of the account being streamed, or `null` when idle.
+ */
 export interface AccountStreamState {
   status: AccountStreamStatus;
   account: string | null;
 }
 
+/**
+ * Callback invoked for each event emitted by the account stream.
+ * @param event - The streamed operation or payment event.
+ */
 export type AccountStreamListener = (event: AccountStreamEvent) => void;
 export type AccountStreamStatusListener = (state: AccountStreamState) => void;
 
